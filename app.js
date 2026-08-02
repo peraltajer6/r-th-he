@@ -13,7 +13,7 @@ const STRINGS = {
   en: {
     chooseLanguage: "Choose your language",
     catalogEyebrow: "MediCatalog",
-    catalogTitle: "Medicines Catalog",
+    catalogTitle: "PushHard",
     catalogTagline: "Browse our range of pharmaceutical products.",
     welcomeTitle: "Welcome",
     welcomeTagline: "Your trusted source for quality medicines, delivered with care.",
