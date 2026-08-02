@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Party Rental Quote Generator</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, Arial;
+    background:#f2f2f2;
+    padding:15px;
+}
+
+h1 {
+    text-align:center;
+}
+
+.card {
+    background:white;
+    padding:15px;
+    border-radius:15px;
+    margin-bottom:15px;
+}
+
+.item {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin:15px 0;
+}
+
+img {
+    width:80px;
+    height:80px;
+    background:#ddd;
+    border-radius:10px;
+}
+
+button {
+    background:#111;
+    color:white;
+    border:none;
+    padding:10px 15px;
+    border-radius:10px;
+    font-size:15px;
+}
+
+input, select, textarea {
+
+width:100%;
+padding:12px;
+margin-top:8px;
+margin-bottom:12px;
+border-radius:10px;
+border:1px solid #ccc;
+font-size:16px;
+
+}
+
+.remove {
+background:#c0392b;
+padding:5px 10px;
+}
+
+.send {
+
+width:100%;
+font-size:18px;
+padding:15px;
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>Party Rental Quote</h1>
+
+
+<div class="card">
+
+<h2>Chairs</h2>
+
+
+<div class="item">
+
+<img src="chair-placeholder.jpg">
+
+<span>Gold Chiavari Chair</span>
+
+<button onclick="addItem('Gold Chiavari Chair')">
+Add
+</button>
+
+</div>
+
+
+<div class="item">
+
+<img src="chair-placeholder.jpg">
+
+<span>White Resin Chair</span>
+
+<button onclick="addItem('White Resin Chair')">
+Add
+</button>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>Tables</h2>
+
+
+<div class="item">
+
+<img src="table-placeholder.jpg">
+
+<span>Round Table</span>
+
+<button onclick="addItem('Round Table')">
+Add
+</button>
+
+</div>
+
+
+
+<div class="item">
+
+<img src="table-placeholder.jpg">
+
+<span>Rectangle Table</span>
+
+<button onclick="addItem('Rectangle Table')">
+Add
+</button>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>Tents</h2>
+
+
+<div class="item">
+
+<img src="tent-placeholder.jpg">
+
+<span>20x20 Tent</span>
+
+<button onclick="addItem('20x20 Tent')">
+Add
+</button>
+
+</div>
+
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>Your Items</h2>
+
+<div id="cart">
+No items selected
+</div>
+
+</div>
+
+
+
+
+
+<div class="card">
+
+<h2>Customer Information</h2>
+
+
+<input id="name" placeholder="Customer Name">
+
+
+<input id="phone" placeholder="Customer Phone Number">
+
+
+<select id="event">
+
+<option>Wedding</option>
+
+<option>Birthday Party</option>
+
+<option>Baby Shower</option>
+
+<option>Corporate Event</option>
+
+<option>Other</option>
+
+</select>
+
+
+
+<label>Event Date</label>
+
+<input type="date" id="date">
+
+
+
+<textarea id="notes" placeholder="Extra Notes"></textarea>
+
+
+
+<button class="send" onclick="sendQuote()">
+
+Send Quote Request
+
+</button>
+
+
+</div>
+
+
+
+
+
+
+<script>
+
+
+let cart={};
+
+
+
+function addItem(item){
+
+if(cart[item]){
+
+cart[item]++;
+
+}
+
+else{
+
+cart[item]=1;
+
+}
+
+
+updateCart();
+
+}
+
+
+
+
+function removeItem(item){
+
+cart[item]--;
+
+
+if(cart[item]<=0){
+
+delete cart[item];
+
+}
+
+
+updateCart();
+
+}
+
+
+
+
+
+function updateCart(){
+
+
+let text="";
+
+
+for(let item in cart){
+
+
+text += `
+
+<p>
+
+<b>${cart[item]}x</b> ${item}
+
+<button class="remove" onclick="removeItem('${item}')">
+
+X
+
+</button>
+
+
+</p>
+
+`;
+
+
+}
+
+
+if(text==""){
+
+text="No items selected";
+
+}
+
+
+document.getElementById("cart").innerHTML=text;
+
+
+}
+
+
+
+
+
+function sendQuote(){
+
+
+let message="PARTY RENTAL QUOTE REQUEST\n\n";
+
+
+message+="Customer: "
++document.getElementById("name").value
++"\n";
+
+
+message+="Phone: "
++document.getElementById("phone").value
++"\n\n";
+
+
+message+="Event Type: "
++document.getElementById("event").value
++"\n";
+
+
+message+="Event Date: "
++document.getElementById("date").value
++"\n\n";
+
+
+
+message+="Inventory Needed:\n";
+
+
+
+for(let item in cart){
+
+
+message+="- "
++cart[item]
++"x "
++item
++"\n";
+
+
+}
+
+
+
+message+="\nNotes:\n"
++document.getElementById("notes").value;
+
+
+
+// iPhone compatible SMS link
+
+let sms =
+"sms:+16317781864&body="
++encodeURIComponent(message);
+
+
+
+window.location.href=sms;
+
+
+}
+
+
+
+</script>
+
+
+</body>
+</html>
